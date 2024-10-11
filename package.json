@@ -1,0 +1,18 @@
+{
+  "name": "starter-dashboard-layout",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:Kamona-WD/starter-dashboard-layout.git",
+  "author": "Kamona-WD <ak3849909@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev"
+  },
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.9",
+    "astro": "^4.16.1",
+    "tailwindcss": "^3.4.13",
+    "typescript": "^5.6.3"
+  }
+}
