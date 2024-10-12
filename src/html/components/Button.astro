@@ -1,0 +1,236 @@
+---
+interface Props {
+    tag?: string
+    href?: string | null
+    type?: 'button' | 'submit' | 'reset'
+    variant?:
+        | 'primary'
+        | 'secondary'
+        | 'success'
+        | 'info'
+        | 'warning'
+        | 'danger'
+        | 'white'
+        | 'black'
+        | 'link'
+        | 'transparent'
+    size?: 'xs' | 'sm' | 'base' | 'lg'
+    srText?: string
+    text?: string
+    icon?: string | null
+    startIcon?: string
+    endIcon?: string
+    shape?: 'square' | 'rounded' | 'pill'
+    ringOffsetColorClass?: string
+    disabled?: boolean
+    block?: boolean
+    class?: string
+    slim?: boolean
+    outline?: boolean
+}
+
+const {
+    href,
+    tag: Tag = href ? 'a' : 'button',
+    type = 'button',
+    variant = 'primary',
+    size = 'base',
+    text,
+    srText,
+    icon,
+    startIcon,
+    endIcon,
+    shape = 'rounded',
+    ringOffsetColorClass = 'focus:ring-offset-white dark:focus:ring-offset-dark-eval-2',
+    disabled = false,
+    block = false,
+    class: className,
+    slim = false,
+    outline = false,
+    ...props
+} = Astro.props
+
+const baseClasses = [
+    'inline-flex',
+    'items-center',
+    'justify-center',
+    'gap-2',
+    'font-bold',
+    'transition',
+    'duration-150',
+    'ease-in-out',
+    'min-w-max',
+    'select-none',
+    'disabled:opacity-50',
+    'disabled:cursor-not-allowed',
+    'focus:z-10',
+]
+
+const colorClasses = {
+    primary: {
+        default: 'focus:ring-primary',
+        filled: {
+            normal: 'bg-primary text-white hover:bg-primary-dark',
+            active: '',
+        },
+        outline: {
+            normal: 'border border-primary text-primary hover:bg-primary-light hover:text-white',
+            active: '',
+        },
+    },
+    secondary: {
+        default: 'focus:ring-primary',
+        filled: {
+            normal: 'bg-gray-100 text-gray-600 hover:bg-gray-200 dark:text-gray-300 dark:bg-gray-800 dark:hover:bg-gray-600',
+            active: '',
+        },
+        outline: {
+            normal: '',
+            active: '',
+        },
+    },
+    success: {
+        default: 'focus:ring-green-500',
+        filled: {
+            normal: 'bg-green-500 text-white hover:bg-green-600',
+            active: '',
+        },
+        outline: {
+            normal: 'border border-green-500 text-green-500 hover:bg-green-400 hover:text-white',
+            active: '',
+        },
+    },
+    info: {
+        default: 'focus:ring-cyan-500',
+        filled: {
+            normal: 'bg-cyan-500 text-white hover:bg-cyan-600',
+            active: '',
+        },
+        outline: {
+            normal: 'border border-cyan-500 text-cyan-500 hover:bg-cyan-400 hover:text-white',
+            active: '',
+        },
+    },
+    warning: {
+        default: 'focus:ring-yellow-500',
+        filled: {
+            normal: 'bg-yellow-500 text-white hover:bg-yellow-600',
+            active: '',
+        },
+        outline: {
+            normal: 'border border-yellow-500 text-yellow-500 hover:bg-yellow-400 hover:text-white',
+            active: '',
+        },
+    },
+    danger: {
+        default: 'focus:ring-red-500',
+        filled: {
+            normal: 'bg-red-500 text-white hover:bg-red-600',
+            active: '',
+        },
+        outline: {
+            normal: 'border border-red-500 text-red-500 hover:bg-red-400 hover:text-white',
+            active: '',
+        },
+    },
+    white: {
+        default: 'focus:ring-white',
+        filled: {
+            normal: 'bg-white text-gray-700 hover:bg-gray-200',
+        },
+        outline: {
+            normal: 'border border-white text-white hover:bg-white hover:text-gray-800',
+        },
+    },
+    black: {
+        default: 'focus:ring-black',
+        filled: {
+            normal: 'bg-black text-gray-300 hover:text-white hover:bg-gray-800',
+            active: '',
+        },
+        outline: {
+            normal: 'border border-black text-black hover:bg-black hover:text-white',
+            active: '',
+        },
+    },
+    link: {
+        default: 'focus:ring-blue-500 underline text-blue-600 hover:text-blue-500',
+        filled: {
+            normal: '',
+            active: '',
+        },
+        outline: {
+            normal: 'border border-blue-500',
+            active: '',
+        },
+    },
+    transparent: {
+        default: 'focus:ring-primary text-gray-700 dark:text-gray-300',
+        filled: {
+            normal: 'hover:text-gray-800 dark:hover:text-gray-100 hover:bg-gray-200 dark:hover:bg-dark-eval-1',
+            active: '',
+        },
+        outline: {
+            normal: 'hover:text-gray-800',
+            active: '',
+        },
+    },
+}
+
+const focusOffsetClasses = ['focus:ring-offset-2']
+
+const focusClasses = ['focus:outline-none', 'focus:ring']
+
+const iconSizeClasses = {
+    xs: 'w-3 h-3',
+    sm: 'w-4 h-4',
+    base: 'w-5 h-5',
+    lg: 'w-6 h-6',
+}
+
+const iconOnlySizeClasses = {
+    xs: 'p-1',
+    sm: 'p-1.5',
+    base: 'p-2',
+    lg: 'p-3',
+}
+
+const defaultSizeClasses = {
+    xs: 'px-2 py-1 text-xs',
+    sm: 'px-2.5 py-1.5 text-sm',
+    base: 'px-4 py-2 text-base',
+    lg: 'px-5 py-2 text-xl',
+}
+
+const sizeClasses = !slim ? (icon ? iconOnlySizeClasses : defaultSizeClasses) : { xs: '', sm: '', base: '', lg: '' }
+
+const shapeClasses = {
+    square: 'rounded-none',
+    rounded: 'rounded-md',
+    pill: 'rounded-full',
+}
+---
+
+<Tag
+    href={href}
+    class:list={[
+        baseClasses,
+        colorClasses[variant]?.default,
+        !outline ? colorClasses[variant]?.filled?.normal : colorClasses[variant]?.outline?.normal,
+        sizeClasses[size],
+        shapeClasses[shape],
+        ringOffsetColorClass,
+        focusOffsetClasses,
+        focusClasses,
+        href && disabled && 'pointer-events-none opacity-50',
+        block && 'w-full',
+        className,
+    ]}
+    {...props}
+>
+    {startIcon && <span class:list={[startIcon, iconSizeClasses[size]]} />}
+    {icon && <span class:list={[icon, iconSizeClasses[size]]} />}
+    {srText && <span class="sr-only">{srText}</span>}
+    {text ?? <slot />}
+    {endIcon && <span class:list={[endIcon, iconSizeClasses[size]]} />}
+</Tag>

@@ -1,8 +1,11 @@
 ---
+import Sidebar from '@components/sidebar/Sidebar.astro'
+import Navbar from '@components/navbar/Navbar.astro'
+import Footer from '@components/Footer.astro'
 import '@/css/main.css'
 
 interface Props {
-    title: string;
+    title: string
 }
 
 const { title } = Astro.props
@@ -19,10 +22,37 @@ const { title } = Astro.props
             href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap"
             rel="stylesheet"
         />
+
+        <style is:inline>
+            [x-cloak] {
+                display: none !important;
+            }
+        </style>
     </head>
     <body class="font-sans antialiased">
-        <div class="flex h-screen overflow-y-hidden bg-white text-gray-900 dark:bg-dark-eval-0 dark:text-gray-100">
-            <slot />
+        <div x-data="mainState()" :class="$store.darkMode.on && 'dark'">
+            <div class="flex h-screen overflow-y-hidden bg-white text-gray-900 dark:bg-dark-eval-0 dark:text-gray-100">
+                <!-- Loading screen -->
+                <div
+                    x-ref="loading"
+                    class="fixed inset-0 z-[200] backdrop-blur flex items-center justify-center text-2xl font-bold text-white bg-black bg-opacity-50"
+                >
+                    Loading.....
+                </div>
+
+                <Sidebar />
+
+                <div class="flex-1 flex flex-col h-full overflow-hidden">
+                    <Navbar />
+
+                    <!-- Content -->
+                    <main class="flex-1 max-h-full p-5 overflow-hidden overflow-y-scroll">
+                        <slot />
+                    </main>
+
+                    <Footer />
+                </div>
+            </div>
         </div>
     </body>
 </html>

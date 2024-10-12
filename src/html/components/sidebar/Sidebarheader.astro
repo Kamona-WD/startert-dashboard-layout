@@ -1,0 +1,12 @@
+---
+import Button from '@astro/components/Button.astro'
+---
+
+<!-- sidebar header -->
+<div class="flex items-center justify-between flex-shrink-0 p-2" :class="{'lg:justify-center': !isSidebarOpen}">
+    <span class="p-2 text-xl font-semibold leading-8 tracking-wider uppercase whitespace-nowrap">
+        K<span :class="{'lg:hidden': !isSidebarOpen}">-WD</span>
+    </span>
+
+    <Button variant="secondary" icon="i-tabler-x" @click="toggleSidbarMenu()" class="lg:hidden" />
+</div>

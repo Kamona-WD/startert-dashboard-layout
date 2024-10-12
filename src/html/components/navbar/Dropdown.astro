@@ -1,0 +1,15 @@
+<div x-data="{ isOpen: false }">
+    <div x-ref="trigger" class="flex items-center">
+        <slot name="trigger" />
+    </div>
+
+    <div
+        x-cloak
+        x-anchor="$refs.trigger"
+        @click.away="isOpen = false"
+        x-show.transition.opacity="isOpen"
+        class="z-20 w-48 max-w-md m-2 transform min-w-max bg-white rounded-md shadow-lg dark:bg-dark-eval-2"
+    >
+        <slot />
+    </div>
+</div>

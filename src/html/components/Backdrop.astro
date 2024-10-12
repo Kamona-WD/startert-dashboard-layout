@@ -1,0 +1,15 @@
+---
+interface Props {
+    show: string
+    onClick: string
+}
+
+const { show, onClick } = Astro.props
+---
+
+<div
+    x-show.in.out.opacity={show}
+    @click={onClick}
+    class="fixed inset-0 z-10 bg-black backdrop-blur-lg bg-opacity-20 lg:hidden"
+>
+</div>

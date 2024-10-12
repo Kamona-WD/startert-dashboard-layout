@@ -1,0 +1,181 @@
+---
+import Button from '@components/Button.astro'
+import Dropdown from '@components/navbar/Dropdown.astro'
+import DropdownLink from '@components/navbar/DropdownLink.astro'
+---
+
+<!-- Navbar -->
+<div class="flex-shrink-0 border-b border-gray-300 dark:border-gray-700">
+    <div class="flex items-center justify-between p-2">
+        <!-- Navbar left -->
+        <div class="flex items-center space-x-3">
+            <span class="p-2 text-xl font-semibold tracking-wider uppercase lg:hidden">K-WD</span>
+            <!-- Toggle sidebar button -->
+            <Button srText="Toggle sidebar" @click="toggleSidbarMenu()" variant="secondary" class="p-2" slim>
+                <span aria-hidden="true" class="i-tabler-chevrons-right w-5 h-5" :class="isSidebarOpen && 'rotate-180'"
+                ></span>
+            </Button>
+        </div>
+
+        <!-- Mobile search box -->
+        <div
+            x-show.transition="isSearchBoxOpen"
+            class="fixed inset-0 z-20 bg-black bg-opacity-20"
+            style="backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px)"
+        >
+            <div
+                @click.away="isSearchBoxOpen = false"
+                class="absolute inset-x-0 flex items-center justify-between p-2 bg-white shadow-md"
+            >
+                <div class="flex items-center flex-1 px-2 space-x-2">
+                    <!-- search icon -->
+                    <span aria-hidden="true" class="i-tabler-search w-6 h-6 text-gray-500"></span>
+
+                    <input
+                        type="text"
+                        placeholder="Search"
+                        class="w-full px-4 py-3 text-gray-600 rounded-md focus:bg-gray-100 focus:outline-none"
+                    />
+                </div>
+
+                <!-- close button -->
+                <Button variant="transparent" icon="i-tabler-x" @click="isSearchBoxOpen = false" srText="close" />
+            </div>
+        </div>
+
+        <!-- Desktop search box -->
+        <div class="items-center hidden px-2 space-x-2 md:flex-1 md:flex md:mr-auto md:ml-5">
+            <!-- search icon -->
+            <span aria-hidden="true" class="i-tabler-search w-6 h-6 text-gray-500"></span>
+
+            <input
+                type="text"
+                placeholder="Search"
+                class="px-4 py-2 rounded-md hover:bg-gray-100 lg:max-w-sm md:flex-1 focus:outline-none border-0 focus:bg-gray-100 focus:shadow md:focus:ring-1 focus:ring-gray-600"
+            />
+        </div>
+
+        <!-- Navbar right -->
+        <div class="relative flex items-center gap-2">
+            <!-- Dark mode button -->
+            <Button variant="secondary" srText="dark mode" @click="$store.darkMode.toggle()" class="p-2" slim>
+                <span x-show="$store.darkMode.on" class="i-tabler-sun w-5 h-5"></span>
+                <span x-show="!$store.darkMode.on" class="i-tabler-moon w-5 h-5"></span>
+            </Button>
+
+            <!-- Search button -->
+            <Button
+                icon="i-tabler-search"
+                variant="secondary"
+                srText="search"
+                @click="isSearchBoxOpen = true"
+                class="md:hidden"
+            />
+
+            <div class="items-center hidden gap-2 md:flex">
+                <!-- Notification Menu -->
+                <Dropdown>
+                    <Fragment slot="trigger">
+                        <!-- red dot -->
+                        <div>
+                            <div class="absolute right-0 p-1 bg-red-400 rounded-full animate-ping"></div>
+                            <div class="absolute right-0 p-1 bg-red-400 border rounded-full"></div>
+                            <Button
+                                icon="i-tabler-bell"
+                                srText="open notification menu"
+                                @click="isOpen = !isOpen"
+                                variant="secondary"
+                            />
+                        </div>
+                    </Fragment>
+
+                    <div class="p-2 font-medium border-b border-gray-300 dark:border-gray-600">
+                        <span class="text-gray-800 dark:text-gray-400">Notification</span>
+                    </div>
+
+                    <ul class="flex flex-col gap-1 p-2">
+                        <li>
+                            <DropdownLink link="#" label="Link" />
+                        </li>
+                        <li>
+                            <DropdownLink link="#" label="Another Link" />
+                        </li>
+                    </ul>
+                    <div class="flex items-center justify-center p-2 border-t border-gray-300 dark:border-gray-600">
+                        <Button href="#" text="See all" slim variant="link" />
+                    </div>
+                </Dropdown>
+
+                <!-- Services Menu -->
+                <Dropdown>
+                    <Fragment slot="trigger">
+                        <Button
+                            icon="i-tabler-layout-grid"
+                            srText="open services menu"
+                            @click="isOpen = !isOpen"
+                            variant="secondary"
+                        />
+                    </Fragment>
+
+                    <div class="p-2 font-medium border-b border-gray-300 dark:border-gray-600">
+                        <span class="text-gray-800 dark:text-gray-400">Web apps & services</span>
+                    </div>
+                    <ul class="flex flex-col gap-1 p-2">
+                        <li>
+                            <DropdownLink link="#" class="items-start gap-2">
+                                <span class="i-tabler-square-rotated mt-1 w-6 h-6 text-gray-500"></span>
+
+                                <span class="flex flex-col">
+                                    <span class="text-lg">Atlassian</span>
+                                    <span class="text-sm text-gray-400">Lorem ipsum dolor sit.</span>
+                                </span>
+                            </DropdownLink>
+                        </li>
+                        <li>
+                            <DropdownLink link="#" class="items-start gap-2">
+                                <span class="i-tabler-brand-slack mt-1 w-6 h-6 text-gray-500"></span>
+
+                                <span class="flex flex-col">
+                                    <span class="text-lg">Slack</span>
+                                    <span class="text-sm text-gray-400">
+                                        Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                                    </span>
+                                </span>
+                            </DropdownLink>
+                        </li>
+                    </ul>
+                    <div class="flex items-center justify-center p-2 border-t border-gray-300 dark:border-gray-600">
+                        <Button href="#" text="Show all apps" slim variant="link" />
+                    </div>
+                </Dropdown>
+            </div>
+
+            <!-- User Menu -->
+            <Dropdown>
+                <Fragment slot="trigger">
+                    <Button @click="isOpen = !isOpen" variant="transparent" class="overflow-hidden" slim>
+                        <img class="object-cover w-9 h-9" src="/assets/images/avatar.png" alt="Ahmed Kamel" />
+                    </Button>
+                </Fragment>
+
+                <div class="flex flex-col p-2 gap-1 font-medium border-b border-gray-300 dark:border-gray-600">
+                    <span class="text-gray-800 dark:text-gray-400">User Name</span>
+                    <span class="text-sm text-gray-400">user@email.com</span>
+                </div>
+
+                <ul class="flex flex-col gap-1 p-2">
+                    <li>
+                        <DropdownLink link="#" label="Link" />
+                    </li>
+                    <li>
+                        <DropdownLink link="#" label="Another Link" />
+                    </li>
+                </ul>
+
+                <div class="flex items-center justify-center p-2 border-t border-gray-300 dark:border-gray-600">
+                    <Button href="#" text="Logout" slim variant="link" />
+                </div>
+            </Dropdown>
+        </div>
+    </div>
+</div>

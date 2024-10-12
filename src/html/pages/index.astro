@@ -3,11 +3,5 @@ import MainLayout from '@layouts/MainLayout.astro'
 ---
 
 <MainLayout title="starter-dashboard-layout">
-    <main class="p-4">
-        <div x-data="{show:false}">
-            <button @click="show = !show">Show</button>
-            <br>
-            <h1 x-show="show" class="text-4xl underline text-primary-dark">Home page</h1>
-        </div>
-    </main>
+    <h1 class="text-4xl underline text-primary-dark">Home page</h1>
 </MainLayout>
